@@ -6,3 +6,8 @@
     background-position: center;
     background-repeat: no-repeat;
   }
+
+.row{
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
