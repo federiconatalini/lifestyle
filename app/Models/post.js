@@ -1,13 +1,13 @@
 class Post {
-    constructor(title, subtitle, body, author, pub, featured, date, img, tag) {
+    constructor(title, description, body, status, featured, image, created_date, tags, author) {
         this.title = title;
-        this.subtitle = subtitle;
+        this.description = description;
         this.body = body;
-        this.public = pub;
+        this.status = status;
         this.featured = featured;
         this.author = author;
-        this.date = date;
-        this.img = img;
-        this.tag = [];
+        this.created_date = created_date;
+        this.image = image;
+        this.tags = [];
     }
 }

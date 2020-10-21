@@ -17,8 +17,6 @@ class RestController{
             contentType: "application/json",
             success: onSuccess
         });
-        console.log('POST3',d)
-
     }
 
     delete(url, onSuccess){
