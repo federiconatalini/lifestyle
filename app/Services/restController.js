@@ -27,4 +27,14 @@ class RestController{
             success: onSuccess
         });
     }
+
+    postComment(url, d, onSuccess){
+        $.post({
+            url: url,
+            data: JSON.stringify(d),
+            dataType: 'json',
+            contentType: "application/json",
+            success: onSuccess
+        });
+    }
 }

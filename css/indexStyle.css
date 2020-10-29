@@ -16,8 +16,8 @@
     text-align: center;
 }
 
-body{
-   
+section, #postContainer{
+    font-family: 'Quicksand', sans-serif;
 }
 
 #postContainer{

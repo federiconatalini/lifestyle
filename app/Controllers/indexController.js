@@ -14,6 +14,8 @@ class IndexController {
         this.newArticleTime=false;
         this.newArticleImg=false;
         this.newArticle=false;
+        this.getComment=false;
+
     }
 
     init() {
@@ -36,6 +38,7 @@ class IndexController {
                 this.showPost(data[id]);
                 console.log(data[id])
                 this.postID.push(data[id]._id);
+                this.getComment=true;
             }
         }.bind(this));
     }
@@ -108,6 +111,12 @@ class IndexController {
         this.addTime(post, postDate);
         this.addImg(post, postImg);
         post.featured ? $("#postContainer").prepend(postContainer) : $("#postContainer").append(postContainer);
+        if(this.getComment){
+            for(let i in post.post_comments){
+                this.showComment(post.post_comments[i], postContainer);
+                this.getComment=false;
+            }
+        }
         postContainer.find("#deletePost").click(function(){
             this.deletePost(post, postContainer);
         }.bind(this))
@@ -119,8 +128,14 @@ class IndexController {
     addComment(post, postContainer){
         var comment=new Comment(postContainer.find('#commento').val(), post.author);
         if( comment.body!=''){
-            return postContainer.find('#newComment').append('<li class="list-group-item"><p class="badge badge-light mr-4">'+comment.author +'</p>'+ comment.body +'</li>')
+            this.restController.postComment("http://localhost:3000/comments/"+post._id , comment, function (data, status, xhr) {
+            this.showComment(comment, postContainer);
+            }.bind(this))
         }
+    }
+
+    showComment(comment, postContainer){
+        return postContainer.find('#newComment').append('<li class="list-group-item"><p class="badge badge-light mr-4">'+comment.author +'</p>'+ comment.body +'</li>')
     }
 
     addImg(post, postImg){
