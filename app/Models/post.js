@@ -1,5 +1,5 @@
 class Post {
-    constructor(title, description, body, status, featured, image, created_date, tags, author) {
+    constructor(title, description, body, status, featured, image, tags, created_date, author) {
         this.title = title;
         this.description = description;
         this.body = body;
@@ -8,6 +8,6 @@ class Post {
         this.author = author;
         this.created_date = created_date;
         this.image = image;
-        this.tags = [];
+        this.tags = tags;
     }
 }
