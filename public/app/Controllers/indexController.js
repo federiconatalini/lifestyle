@@ -15,7 +15,8 @@ class IndexController {
         this.newArticleImg=false;
         this.newArticle=false;
         this.getComment=false;
-        this.editPost=false;
+        this.editMode=false;
+        this.editedPost=null;
     }
 
     init() {
@@ -28,7 +29,11 @@ class IndexController {
             this.featured = $("#featured");
             this.tag = $("#tag");
             this.getPost();
-            $('#addPost').click(this.addPost.bind(this));
+            $('#addPost').click( function(){
+                this.closeModal();
+                (!this.editMode) ? this.addPost.bind(this) : this.updatePost(this.editedPost);
+                this.resetModal();
+            }.bind(this))
         }.bind(this))
     }
 
@@ -41,6 +46,14 @@ class IndexController {
                 this.getComment=true;
             }
         }.bind(this));
+    }
+
+    updatePost(post){
+        this.restController.patch("https://lifestyle-backend.herokuapp.com/posts/", post._id, function (data, status, xhr) {
+            this.showPost(post);
+            this.editMode=false;
+            console.log('UPDATE', post)
+        }.bind(this))
     }
 
     deletePost(post, postContainer){
@@ -56,7 +69,6 @@ class IndexController {
     }
 
     addPost() {
-        this.closeModal();
         var pub = this.public.prop("checked") ? 'public' : 'draft';
         var fea = this.featured.prop("checked");
         this.newArticleTime=true;
@@ -66,7 +78,6 @@ class IndexController {
         var tags= this.addTag();
         var p = new Post(this.title.val(), this.subtitle.val(), this.body.val(), pub, fea, this.image.val(), tags, date);
         this.newPost(p);
-        this.resetModal();
     }
 
     addTag(){
@@ -118,8 +129,9 @@ class IndexController {
             }
         }
         postContainer.find("#updatePost").click(function(){
-            this.editPost=true;
-            this.updatePost(post, postContainer);
+            this.editMode=true;
+            this.editedPost=post;
+            this.openModal(post);
         }.bind(this))
         postContainer.find("#deletePost").click(function(){
             this.deletePost(post, postContainer);
@@ -186,5 +198,9 @@ class IndexController {
         this.subtitle.val("");
         this.image.val("");
         this.tag.val("");
+    }
+
+    openModal(post) {
+        $("#modal").modal('show');   
     }
 }

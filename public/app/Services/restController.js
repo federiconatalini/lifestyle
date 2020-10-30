@@ -28,6 +28,15 @@ class RestController{
         });
     }
 
+    patch(url,patch ,onSuccess, onError){
+        $.ajax({
+            type: 'PATCH',
+            url: url,
+            data: JSON.stringify(patch),
+            success: onSuccess,
+         });
+    }
+
     postComment(url, d, onSuccess){
         $.post({
             url: url,
