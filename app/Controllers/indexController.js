@@ -15,7 +15,7 @@ class IndexController {
         this.newArticleImg=false;
         this.newArticle=false;
         this.getComment=false;
-
+        this.editPost=false;
     }
 
     init() {
@@ -117,6 +117,10 @@ class IndexController {
                 this.getComment=false;
             }
         }
+        postContainer.find("#updatePost").click(function(){
+            this.editPost=true;
+            this.updatePost(post, postContainer);
+        }.bind(this))
         postContainer.find("#deletePost").click(function(){
             this.deletePost(post, postContainer);
         }.bind(this))
