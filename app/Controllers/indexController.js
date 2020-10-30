@@ -33,7 +33,7 @@ class IndexController {
     }
 
     getPost() {
-        this.restController.get('http://localhost:3000/posts', function (data, textStatus, jqXHR) {
+        this.restController.get('https://lifestyle-backend.herokuapp.com/posts', function (data, textStatus, jqXHR) {
             for (let id in data) {
                 this.showPost(data[id]);
                 console.log(data[id])
@@ -47,7 +47,7 @@ class IndexController {
         if(!this.newArticle){
             postContainer.css("display", "none");
             console.log('id: '+post._id+', titolo: '+post.title);
-            this.restController.delete('http://localhost:3000/posts/'+ post._id, function(data, status, xhr){
+            this.restController.delete('https://lifestyle-backend.herokuapp.com/posts/'+ post._id, function(data, status, xhr){
             }.bind(this))
         }else{
             postContainer.css("display", "none");
@@ -79,7 +79,7 @@ class IndexController {
     }
 
     newPost(post) {
-        this.restController.post("http://localhost:3000/posts", post, function (data, status, xhr) {
+        this.restController.post("https://lifestyle-backend.herokuapp.com/posts", post, function (data, status, xhr) {
             this.showPost(post);
             console.log('POST2', post)
         }.bind(this))
@@ -132,7 +132,7 @@ class IndexController {
     addComment(post, postContainer){
         var comment=new Comment(postContainer.find('#commento').val(), post.author);
         if( comment.body!=''){
-            this.restController.postComment("http://localhost:3000/comments/"+post._id , comment, function (data, status, xhr) {
+            this.restController.postComment("https://lifestyle-backend.herokuapp.com/comments/"+post._id , comment, function (data, status, xhr) {
             this.showComment(comment, postContainer);
             }.bind(this))
         }
